@@ -1,0 +1,66 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<link href="/admin/statics/styles/dialog.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/My97DatePicker/calendar.js"></script>
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/My97DatePicker/WdatePicker.js"></script>
+
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/dialog.js"></script>
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/ajaxfileupload.js"></script>
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/gifweb/gifcontent_type/add" onsubmit="return check();" name="myform">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td width="150" height="30" align="center" >类型名称：</td>
+						<td><input type="text" size="30" name="name" id="name" value="{_$r.name _}" /></td>
+					</tr>
+					
+					
+					<tr>
+						<td width="100" height="30" align="center" >状态：</td>
+						<td><select name="status" id="status" style="width: 200px;">
+								<option value="1" {_if $r.status==1 _}selected="selected" {_/if _}>正常</option>
+								<option value="2" {_if $r.status==2 _}selected="selected" {_/if _}>失效</option>
+							</select></td>
+					</tr>
+					
+					<tr>
+						<td width="100" height="30" align="center" >是否显示：</td>
+						<td><select name="is_show" id="is_show" style="width: 200px;">
+								<option value="1" {_if $r.is_show==1 _}selected="selected" {_/if _}>显示</option>
+								<option value="2" {_if $r.is_show==2 _}selected="selected" {_/if _}>隐藏</option>
+							</select></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" style="text-align: center;"><input type="hidden" id="id" name="id" value="{_$r.id _}" /><button id="dosubmit">{_if $r.id _}修 改{_else _}添 加{_/if _}</button><input type="hidden" name="act" id="act" value="{_if $r.id _}edit{_else _}add{_/if _}" /></td>
+					</tr>
+	
+					
+				</tbody>
+			</table>
+			<div ></div>
+		</form>
+	</div>
+</div>
+
+<script>
+
+
+
+function check()
+{
+	var message = "请补全：\r\n";
+		var messages = '';
+		if($('#title').val()=='')
+		{
+			messages +="类型名称\r\n";
+		}
+		if(messages)
+		{
+			alert(message+messages);
+			return false;
+		}
+		return true;
+} 
+</script>

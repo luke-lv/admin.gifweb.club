@@ -1,0 +1,52 @@
+{_include file="include/_header.inc.html" title="$title"  _}
+<div class="table-list pad-lr-10">
+	<form method="post" action="/admin/role/listorder" name="myform">
+		<table cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th width="10%">排序</th>
+					<th width="10%">ID</th>
+					<th align="left" width="15%">角色名称</th>
+					<th align="left" width="265">角色描述</th>
+					<th align="left" width="5%">状态</th>
+					<th class="text-c">管理操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{_foreach from=$view.roles item=item  _}
+				<tr>
+					<td align="center" width="10%"><input type="text" class="input-text-c input-text" value="{_$item.listorder _}" size="3" name="listorders[{_$item.roleid _}]" /></td>
+					<td align="center" width="10%">{_$item.roleid _}</td>
+					<td width="15%">{_$item.rolename _}</td>
+					<td width="265">{_$item.description _}</td>
+					<td width="5%">
+						<a href="/admin/role/change_status?roleid={_$item.roleid _}&amp;disabled={_if $item.disabled _}0{_else _}1{_/if _}">{_if $item.disabled _}<font color="blue">×</font>{_else _}<font color="red">√</font>{_/if _}</a>
+					</td>
+					<td class="text-c">
+					{_if $item.roleid gt 1 _}
+						<a href="javascript:setting_role({_$item.roleid _}, '{_$item.rolename _}')">权限设置</a> |
+						<a href="/admin/role/member_manage?roleid={_$item.roleid _}&amp;menuid={_$view.menuid _}">成员管理</a> |
+						<a href="/admin/role/edit?roleid={_$item.roleid _}&amp;menuid={_$view.menuid _}">修改</a> |
+						<a href="javascript:confirmurl('/admin/role/delete?roleid={_$item.roleid _}', '是否删除?')">删除</a>
+					{_else _}
+						<font color="#cccccc">权限设置</font> |
+						<a href="/admin/role/member_manage?roleid={_$item.roleid _}&amp;menuid={_$view.menuid _}">成员管理</a> |
+						<font color="#cccccc">修改</font> | <font color="#cccccc">删除</font>
+					{_/if _}
+					</td>
+				</tr>
+				{_/foreach _}
+			</tbody>
+		</table>
+		<div class="btn"><input type="submit" value="排序" name="dosubmit" class="button" /></div>
+	</form>
+</div>
+<script type="text/javascript">
+<!--
+function setting_role(id, name) {
+
+	window.top.art.dialog({title:'设置《'+name+'》',id:'edit',iframe:'/admin/role/privilege?roleid='+id,width:'700',height:'500'});
+}
+//-->
+</script>
+{_include file="include/_footer.inc.html" _}

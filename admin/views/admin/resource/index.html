@@ -1,0 +1,27 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<form name="myform" action="{_$uri _}" method="post">
+	<div class="pad-lr-10">
+		<div class="table-list">
+			<table width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th width="30px" align="center"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');" /></th>
+						<th width="80">排序</th>
+						<th width="100">id</th>
+						<th>菜单名称</th>
+						<th>key</th>
+						<th>管理操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{_$categorys _}
+				</tbody>
+			</table>
+			<div class="btn">
+				<label for="check_box">全选/取消</label>&nbsp;&nbsp;
+				<input type="submit" value="排序" name="dosubmit" class="button" />
+			</div>
+		</div>
+	</div>
+</form>
+{_include file="include/_footer.inc.html" _}

@@ -1,0 +1,79 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/{_$view.uri _}" name="myform">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td width="80">用户名</td>
+						<td><input type="text" id="username" class="input-text" name="info[username]" /><div id="usernameTip" class="onShow">请输入用户名</div></td>
+					</tr>
+					<tr>
+						<td>密码</td>
+						<td><input type="password" value="" id="password" class="input-text" name="info[password]" /><div id="passwordTip" class="onShow">请输入密码</div></td>
+					</tr>
+					<tr>
+						<td>确认密码</td>
+						<td><input type="password" value="" id="pwdconfirm" class="input-text" name="info[pwdconfirm]" /><div id="pwdconfirmTip" class="onShow">请输入确认密码</div></td>
+					</tr>
+					<tr>
+						<td>E-mail</td>
+						<td>
+							<input type="text" size="30" id="email" class="input-text" value="" name="info[email]" />
+							<div id="emailTip" class="onShow">请输入E-mail</div>
+						</td>
+					</tr>
+					<tr>
+						<td>真实姓名</td>
+						<td>
+							<input type="text" id="realname" class="input-text" value="" name="info[realname]" />
+						</td>
+					</tr>
+					<tr>
+						<td>所属角色</td>
+						<td>
+							<select name="info[roleid]">
+								{_foreach from=$view.roles item=item _}
+								<option value="{_$item.roleid _}">{_$item.rolename _}</option>
+								{_/foreach _}
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="bk15"></div>
+			<input type="submit" class="button" value="提交" name="dosubmit" />
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	<!--
+	$(function(){
+		$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+		$("#username").formValidator({onshow:"请输入用户名",onfocus:"用户名应该为2-20位之间"}).inputValidator({min:2,max:20,onerror:"用户名应该为2-20位之间"}).ajaxValidator({
+			type : "get",
+			url : "",
+			data :"/admin/user/public_checkname_ajx",
+			datatype : "html",
+			async:'false',
+			success : function(data){
+				if( data == "1" )
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			},
+			buttons: $("#dosubmit"),
+			onerror : "用户已存在。",
+			onwait : "请稍候..."
+		});
+		$("#password").formValidator({onshow:"请输入密码",onfocus:"密码应该为6-20位之间"}).inputValidator({min:6,max:20,onerror:"密码应该为6-20位之间"});
+		$("#pwdconfirm").formValidator({onshow:"请输入确认密码",onfocus:"请输入两次密码不同。",oncorrect:"密码输入一致"}).compareValidator({desid:"password",operateor:"=",onerror:"请输入两次密码不同。"});
+		$("#email").formValidator({onshow:"请输入E-mail",onfocus:"E-mail格式错误",oncorrect:"E-mail格式正确"}).regexValidator({regexp:"email",datatype:"enum",onerror:"E-mail格式错误"});
+	})
+	//-->
+</script>
+{_include file="include/_footer.inc.html" _}

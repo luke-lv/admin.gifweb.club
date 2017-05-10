@@ -1,0 +1,24 @@
+{_foreach from=$left_menu item=item _}
+<h3 class="f14"><span title="展开与收缩" class="switchs cu"></span>{_$item.title _}</h3>
+<ul style="display:none">
+	{_foreach from=$item.child item=child _}
+	<li class="sub_menu" id="_MP{_$child.id _}"><a style="outline:none;" hidefocus="true" href="javascript:_MP({_$child.id _},'/{_$child.m _}/{_$child.c _}/{_$child.a _}{_if $child.data _}?{_$child.data _}{_/if _}');">{_$child.title _}</a></li>
+	{_/foreach _}
+</ul>
+{_/foreach _}
+<script type="text/javascript">
+$("#leftMain .f14").each(function(i){
+	var ul = $(this).next();
+	var span = $(this).find("span");
+	$(this).click(
+	function(){
+		if(ul.is(':visible')){
+			ul.hide();
+			span.removeClass('on');
+				}else{
+			ul.show();
+			span.addClass('on');
+		}
+	})
+});
+</script>

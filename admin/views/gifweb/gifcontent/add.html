@@ -1,0 +1,135 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<link href="/admin/statics/styles/dialog.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/My97DatePicker/calendar.js"></script>
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/My97DatePicker/WdatePicker.js"></script>
+
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/dialog.js"></script>
+<script language="javascript" type="text/javascript" src="/admin/statics/scripts/ajaxfileupload.js"></script>
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/gifweb/gifcontent/add" onsubmit="return check();" name="myform">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td width="150" height="30" align="center" >标题：</td>
+						<td><input type="text" size="30" name="title" id="title" value="{_$r.title _}" /></td>
+					</tr>
+					
+					<tr>
+						<td width="150" height="30" align="center" >描述：</td>
+						<td>
+							<textarea id='desc' name='desc' cols='40'>{_$r.gif_desc _}</textarea>
+						</td>
+					</tr>
+					
+					<tr>
+						<td width="100" height="30" align="center" >类型：</td>
+						<td><select name="type" id="type" style="width: 200px;">
+								{_foreach from=$type_list item=item key=key _}
+								<option value="{_$item.id _}" {_if $r.type==$item.id _}selected="selected" {_/if _}>{_$item.name _}</option>
+								{_/foreach _}
+							</select></td>
+					</tr>
+					
+					
+					<tr>
+						<td width="100" height="30" align="center" >状态：</td>
+						<td><select name="status" id="status" style="width: 200px;">
+								<option value="0" {_if $r.status==0 _}selected="selected" {_/if _}>未审核</option>
+								<option value="1" {_if $r.status==1 _}selected="selected" {_/if _}>审核通过</option>
+								<option value="2" {_if $r.status==2 _}selected="selected" {_/if _}>关闭</option>
+							</select></td>
+					</tr>
+					
+					<tr>
+						<td colspan='2' width="100" height="30" align="center" ><font color="red"><font size='4'><strong>动态图片</strong></font></font><br></td>
+					</tr>
+					
+					<tr>
+						<td width="100" height="30" align="center" >图片：<br><font color="red">100*100</font></td>
+						<td>
+							<input type="hidden" id="gif_img" name="gif_img" value="{_$r.gif_img _}" />
+							<a href="javascript:;" id="onclicks">(点击图片添加/修改)</a><br>
+							<img src="{_if $r.gif_img _}{_$img_domin _}{_$r.gif_img _}{_else _}/admin/statics/images/upload.png{_/if _}"  id="upload" />&nbsp;
+							<input id="fileToUpload" style="display: none" type="file" name="upfile">
+						</td>
+					</tr>
+					
+
+					<tr>
+						<td colspan="2" style="text-align: center;"><input type="hidden" id="id" name="id" value="{_$r.cid _}" /><button id="dosubmit">{_if $r.cid _}修 改{_else _}添 加{_/if _}</button><input type="hidden" name="act" id="act" value="{_if $r.cid _}edit{_else _}add{_/if _}" /></td>
+					</tr>
+	
+					
+				</tbody>
+			</table>
+			<div ></div>
+		</form>
+	</div>
+</div>
+
+<script>
+
+$(function(){  
+    //点击打开文件选择器  
+    $("#upload,#onclicks").click(function() {  
+        $('#fileToUpload').click();
+    });  
+      
+});  
+
+//选择文件之后执行上传  
+$('#fileToUpload').live('change',function() {
+	$('#onclicks').html('上传中...');
+    $.ajaxFileUpload({  
+        url:'/gifweb/gifcontent/uploadImg/',  
+        secureuri:false,  
+        fileElementId:'fileToUpload',//file标签的id  
+        dataType: 'json',//返回数据的类型  
+        data:{},//一同上传的数据  
+        success: function (data, status) {  
+            //把图片替换  
+            if(data.error=='1')
+            {
+            	$("#upload").attr("src", data.urls); 
+            	$('#gif_img').val(data.url_fix);
+            	$('#onclicks').html('(上传成功，点击修改)');
+            }else{
+				$('#onclicks').html('(上传失败，点击修改)');
+			}
+        },  
+        error: function (data, status, e) {  
+			$('#onclicks').html('(上传失败，点击修改)');
+			 console.log(data);
+            alert(e);  
+        }  
+    });  
+}); 
+
+
+
+function check()
+{
+	var message = "请补全：\r\n";
+		var messages = '';
+		if($('#title').val()=='')
+		{
+			messages +="标题\r\n";
+		}
+		if($('#desc').val()=='')
+		{
+			messages +="描述\r\n";
+		}
+		
+		if($('#gif_img').val()=='')
+		{
+			messages +="图片\r\n";
+		}
+		if(messages)
+		{
+			alert(message+messages);
+			return false;
+		}
+		return true;
+} 
+</script>

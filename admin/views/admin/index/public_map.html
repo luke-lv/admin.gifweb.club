@@ -1,0 +1,25 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<div class="pad-10">
+	{_foreach from=$menu item=item _}
+	<div class="map-menu lf">
+		<ul>
+			<li class="title">{_$item.title _}</li>
+			{_foreach from=$item.child item=child2nd _}
+			<li class="title2">{_$child2nd.title _}</li>
+			{_foreach from=$child2nd.child item=child3rd _}
+			<li><a href="javascript:go('/{_$child3rd.m _}/{_$child3rd.c _}/{_$child3rd.a _}?menuid={_$child3nd.parentid _}{_if $child3rd.data _}&amp;{_$child3rd.data _}{_/if _}')">{_$child3rd.title _}</a></li>
+			{_/foreach _}
+			{_/foreach _}
+		</ul>
+	</div>
+	{_/foreach _}
+</div>
+<script type="text/javascript">
+	<!--
+	function go(url) {
+		window.top.document.getElementById('rightMain').src=url;
+		window.top.art.dialog({id:'map'}).close();
+	}
+	//-->
+</script>
+{_include file="include/_footer.inc.html" _}

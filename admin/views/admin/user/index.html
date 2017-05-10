@@ -1,0 +1,54 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<div class="pad_10">
+	<div class="table-list">
+		<form method="post" action="/admin/user/listorder" name="myform">
+			<table cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th width="10%">序号</th>
+						<th align="left" width="10%">用户名</th>
+						<th align="left" width="10%">所属角色</th>
+						<th align="left" width="10%">最后登录IP</th>
+						<th align="left" width="20%">最后登录时间</th>
+						<th align="left" width="15%">E-mail</th>
+						<th width="10%">真实姓名</th>
+						<th width="15%">管理操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{_foreach from=$users item=item _}
+					<tr>
+						<td align="center" width="10%">{_$item.userid _}</td>
+						<td width="10%"><strong>{_$item.username _}</strong></td>
+						<td width="10%">{_$item.rolename _}</td>
+						<td width="10%">{_$item.lastloginip|default:'--' _}</td>
+						<td width="20%">{_if $item.lastlogintime gt 0 _}{_$item.lastlogintime|date_format:'%Y-%m-%d %H:%M:%S' _}{_else _}从不{_/if _}</td>
+						<td width="15%">{_$item.email _}</td>
+						<td align="center" width="10%">{_$item.realname _}</td>
+						<td align="center" width="15%">
+							<a href="javascript:edit({_$item.userid _}, '{_$item.username _}')">修改</a>
+							<span>|</span>
+							{_if $item.userid gt 1 _}
+							<a href="javascript:confirmurl('/admin/user/delete?userid={_$item.userid _}', '是否删除该用户?')">删除</a>
+							{_else _}
+							<font color="#cccccc">删除</font>
+							{_/if _}
+						</td>
+					</tr>
+					{_/foreach _}
+				</tbody>
+			</table>
+			<div class="btn"></div>
+			<div id="pages">{_$pages _}</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	<!--
+	function edit(id, name) {
+		window.top.art.dialog({title:'修改--'+name, id:'edit', iframe:'/admin/user/edit?userid='+id ,width:'500px',height:'400px'}, 	function(){var d = window.top.art.dialog({id:'edit'}).data.iframe;
+			var form = d.document.getElementById('dosubmit');form.click();return false;}, function(){window.top.art.dialog({id:'edit'}).close()});
+	}
+	//-->
+</script>
+{_include file="include/_footer.inc.html" _}

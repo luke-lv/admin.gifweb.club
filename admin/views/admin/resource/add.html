@@ -1,0 +1,79 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<script type="text/javascript">
+	<!--
+	$(function(){
+		$.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+		$("#language").formValidator({onshow:"请输入对应的中文语言名称",onfocus:"请输入对应的中文语言名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入对应的中文语言名称"});
+		$("#name").formValidator({onshow:"请输入菜单英文名称",onfocus:"请输入菜单英文名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入菜单英文名称"});
+		$("#m").formValidator({onshow:"请输入模块名",onfocus:"请输入模块名",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入模块名"});
+		/*$("#c").formValidator({onshow:"请输入文件名",onfocus:"请输入文件名",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入文件名"});*/
+		/*$("#a").formValidator({tipid:'a_tip',onshow:"请输入方法名",onfocus:"请输入方法名",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入方法名"});*/
+	})
+	//-->
+</script>
+<div class="common-form">
+	<form method="post" action="/{_$view.uri _}" id="myform" name="myform">
+		<table width="100%" class="table_form contentWrap">
+			<tbody>
+				<tr>
+					<th width="200">上级菜单：</th>
+					<td>
+						<select name="info[parentid]">
+							<option value="0">作为一级菜单</option>
+							{_$view.categorys _}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th> 对应的中文语言名称：</th>
+					<td>
+						<input type="text" class="input-text" id="title" name="info[title]" max-length="40" /><div id="languageTip" class="onShow">请输入对应的中文语言名称</div>
+					</td>
+				</tr>
+				<tr>
+					<th>菜单英文名称：</th>
+					<td>
+						<input type="text" class="input-text" id="name" name="info[name]" max-length="40" /><div id="nameTip" class="onShow">请输入菜单英文名称。<font color="red">唯一</font></div>
+					</td>
+				</tr>
+				<tr>
+					<th>模块名：</th>
+					<td>
+						<input type="text" class="input-text" id="m" name="info[m]" /><div id="mTip" class="onShow">请输入模块名</div>
+					</td>
+				</tr>
+				<tr>
+					<th>文件名：</th>
+					<td>
+						<input type="text" class="input-text" id="c" name="info[c]" /><div id="cTip" class="onShow" />请输入文件名</div>
+					</td>
+				</tr>
+				<tr>
+					<th>方法名：</th>
+					<td>
+						<input type="text" class="input-text" id="a" name="info[a]" />&nbsp;<span id="a_tip" class="onShow">请输入方法名</span>通过AJAX 传递的方法，请使用 ajax_开头，方法为修改或删除操作时，请对应写成，ajax_edit_myaction/ajax_delete_myaction
+					</td>
+				</tr>
+				<tr>
+					<th>附加参数：</th>
+					<td>
+						<input type="text" class="input-text" name="info[data]" />
+					</td>
+				</tr>
+				<tr>
+					<th>是否显示菜单：</th>
+					<td>
+						<input type="radio" checked="" value="1" name="info[display]" />&nbsp;是
+						<input type="radio" value="0" name="info[display]" />&nbsp;否
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="bk15"></div>
+		<div class="btn">
+			<input type="hidden" name="token" value="" />
+			<input type="submit" value="提交" name="dosubmit" class="button" id="dosubmit" />
+		</div>
+	</form>
+</div>
+{_include file="include/_footer.inc.html" _}

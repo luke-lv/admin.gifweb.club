@@ -1,0 +1,42 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<script type="text/javascript">
+	<!--
+	$(function(){
+		$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+		$("#rolename").formValidator({onshow:"请输入角色名称",onfocus:"角色名称不能为空。"}).inputValidator({min:1,max:999,onerror:"角色名称不能为空。"});
+	})
+	//-->
+</script>
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/{_$view.uri _}" name="myform">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td><label for="rolename">角色名称</label></td>
+						<td><input type="text" id="rolename" class="input-text" value="{_$view.data.rolename _}" name="info[rolename]" /><div id="rolenameTip" class="onShow">请输入角色名称</div></td>
+					</tr>
+					<tr>
+						<td><label for="description">角色描述</label></td>
+						<td><textarea style="height:100px;width:500px;" class="inputtext" id="description" cols="20" rows="2" name="info[description]">{_$view.data.description _}</textarea></td>
+					</tr>
+					<tr>
+						<td>是否启用</td>
+						<td>
+							<input type="radio" {_if $data.disabled neq 1 _}checked="checked"{_/if _} value="0" name="info[disabled]" />&nbsp;启用
+							<input type="radio" {_if $data.disabled eq 1 _}checked="checked"{_/if _} value="1" name="info[disabled]" />&nbsp;禁止
+						</td>
+					</tr>
+					<tr>
+						<td>排序</td>
+						<td><input type="text" value="{_$view.data.listorder _}" class="input-text" size="3" name="info[listorder]" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="bk15"></div>
+			<input type="hidden" value="{_$view.data.roleid _}" name="roleid" />
+			<input type="submit" class="button" value="提交" name="dosubmit" />
+		</form>
+	</div>
+</div>
+{_include file="include/_footer.inc.html" _}

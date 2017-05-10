@@ -1,0 +1,69 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/{_$view.uri _}" name="myform">
+			<input type="hidden" value="{_$view.user.userid _}" name="info[userid]">
+			<input type="hidden" value="{_$view.user.username _}" name="info[username]">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td width="80">用户名</td>
+						<td><strong>{_$view.user.username _}</strong></td>
+					</tr>
+					<tr>
+						<td width="80">真实姓名</td>
+						<td>{_$view.user.realname _}</td>
+					</tr>
+					<tr>
+						<td>E-mail</td>
+						<td>{_$view.user.email _}</td>
+					</tr>
+
+					<tr>
+						<td>旧密码</td>
+						<td><input type="password" class="input-text" id="old_password" name="old_password" /><div id="old_passwordTip" class="onShow">不修改密码请留空。</div></td>
+					</tr>
+
+					<tr>
+						<td>新密码</td>
+						<td><input type="password" class="input-text" id="new_password" name="new_password" /><div id="new_passwordTip" class="onShow">不修改密码请留空。</div></td>
+					</tr>
+					<tr>
+						<td>重复新密码</td>
+						<td><input type="password" class="input-text" id="new_pwdconfirm" name="new_pwdconfirm" /><div id="new_pwdconfirmTip" class="onShow">不修改密码请留空。</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="bk15"></div>
+			<input type="submit" id="dosubmit" class="button" value="提交" name="dosubmit" />
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+		$("#old_password").formValidator({empty:true,onshow:"不修改密码请留空。",onfocus:"密码应该为6-20位之间",oncorrect:"旧密码输入正确"}).inputValidator({min:6,max:20,onerror:"密码应该为6-20位之间"}).ajaxValidator({
+			type : "post",
+			url : "/admin/user/public_password_ajx",
+			data :"",
+			datatype : "html",
+			async:'false',
+			success : function(data){
+				if( data == "1" )
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			},
+			buttons: $("#dosubmit"),
+			onerror : "旧密码输入错误",
+			onwait : "请稍候..."
+		});
+		$("#new_password").formValidator({empty:true,onshow:"不修改密码请留空。",onfocus:"密码应该为6-20位之间"}).inputValidator({min:6,max:20,onerror:"密码应该为6-20位之间"});
+		$("#new_pwdconfirm").formValidator({empty:true,onshow:"不修改密码请留空。",onfocus:"请输入两次密码不同。",oncorrect:"密码输入一致"}).compareValidator({desid:"new_password",operateor:"=",onerror:"请输入两次密码不同。"});
+	})
+</script>
+{_include file="include/_footer.inc.html" _}

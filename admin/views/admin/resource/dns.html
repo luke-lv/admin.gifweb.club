@@ -1,0 +1,38 @@
+{_include file="include/_header.inc.html" title="$title" _}
+<div class="pad_10">
+	<div class="common-form">
+		<form id="myform" method="post" action="/admin/resource/dnschange" name="myform">
+			<table width="100%" class="table_form contentWrap">
+				<tbody>
+					<tr>
+						<td width="80">域名：</td>
+						<td><input type="text" id="domain" class="input-text" name="domain" /><div id="usernameTip" class="onShow">请输入域名</div></td>
+					</tr>
+					<tr>
+						<td>原指向：</td>
+						<td><input type="text" value="" id="from" class="input-text" name="from" /><div id="passwordTip" class="onShow">原有域名指向IP或cname地址</div></td>
+					</tr>
+					<tr>
+						<td>新指向：</td>
+						<td><input type="text" value="" id="to" class="input-text" name="to" /><div id="pwdconfirmTip" class="onShow">域名新指向IP或cname地址，cname地址需要域名结尾有“.”</div></td>
+					</tr>
+					<tr>
+						<td>类型：</td>
+						<td>
+							<select name="type">
+								<option value="0">请选择...</option>
+								<option value="1">A记录</option>
+								<option value="2">CNAME</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="bk15"></div>
+			<input type="submit" class="button" value="提交" name="dosubmit" />
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+</script>
+{_include file="include/_footer.inc.html" _}
